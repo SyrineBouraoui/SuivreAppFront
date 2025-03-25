@@ -1,0 +1,629 @@
+.patient-container {
+  font-family: Arial, sans-serif;
+}
+
+.containerr {
+  width: 100%;
+  background: white;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(38, 53, 114);
+  padding: 20px 30px;
+  color: white;
+  font-size: 18px; /* Default font size for larger screens */
+}
+
+.logo {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: none;
+}
+.logoo {
+  border-radius: 53%;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.get-started {
+  background: #146e91;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Add responsive media queries for smaller screens */
+@media (max-width: 1024px) {
+  header {
+    font-size: 16px; /* Slightly smaller font size for tablets */
+    padding: 15px 25px; /* Adjust header padding */
+  }
+
+  .logo {
+    font-size: 22px; /* Slightly smaller logo font size */
+  }
+
+  nav ul li a {
+    font-size: 14px; /* Smaller font size for navigation links */
+  }
+
+  .get-started {
+    font-size: 14px; /* Smaller button text */
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    font-size: 14px; /* Smaller font size for phones */
+    padding: 10px 20px; /* Adjust header padding */
+  }
+
+  .logo {
+    font-size: 20px; /* Smaller logo font size */
+  }
+
+  nav ul li a {
+    font-size: 12px; /* Even smaller font size for navigation links */
+  }
+
+  .get-started {
+    font-size: 12px; /* Smaller button text */
+    padding: 8px 12px; /* Adjust button padding */
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    font-size: 12px; /* Even smaller font size for very small screens */
+    padding: 8px 15px; /* Adjust header padding */
+  }
+
+  .logo {
+    font-size: 18px; /* Even smaller logo font size */
+  }
+
+  nav ul li a {
+    font-size: 10px; /* Very small font size for navigation links */
+  }
+
+  .get-started {
+    font-size: 10px; /* Very small button text */
+    padding: 6px 10px; /* Adjust button padding */
+  }
+}
+
+/* Container Styling */
+.cont {
+  display: flex; /* Aligns children in a row */
+  align-items: center; /* Vertically centers the items */
+  gap: 20px; /* Space between the image and the container */
+  flex-wrap: wrap; /* Allows wrapping of items on smaller screens */
+}
+
+.telephone {
+  width: 600px; /* Default width */
+  height: 600px; /* Default height */
+}
+
+.contact-container {
+  flex: 1;
+  text-align: center;
+}
+
+/* Contact Container Heading */
+.contact-container h2 {
+  font-size: 40px;
+  color: #1e456f;
+  margin-bottom: 10px;
+  font-family: poppins;
+}
+
+/* Contact Container Paragraph */
+.contact-container p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* 📱 Responsive Design for Cont */
+@media (max-width: 1024px) {
+  .cont {
+    gap: 15px; /* Reduce gap on tablets */
+    flex-direction: column; /* Stack items on smaller screens */
+    align-items: center; /* Center-align items */
+  }
+
+  .telephone {
+    width: 80%; /* Scale the image on tablets */
+    height: 80%;
+  }
+
+  .contact-container h2 {
+    font-size: 30px; /* Smaller heading size */
+  }
+
+  .contact-container p {
+    font-size: 12px; /* Smaller paragraph font size */
+  }
+}
+
+@media (max-width: 768px) {
+  .cont {
+    gap: 10px; /* Reduce gap on phones */
+    flex-direction: column; /* Stack items */
+    align-items: center; /* Center-align items */
+  }
+
+  .telephone {
+    width: 90%; /* Further scale the image */
+    height: 90%; /* Further scale the height */
+  }
+
+  .contact-container h2 {
+    font-size: 25px; /* Smaller heading size */
+  }
+
+  .contact-container p {
+    font-size: 11px; /* Smaller paragraph font size */
+  }
+}
+
+@media (max-width: 480px) {
+  .cont {
+    gap: 8px; /* Reduce gap on very small screens */
+    flex-direction: column; /* Stack items */
+    align-items: center; /* Center-align items */
+  }
+
+  .telephone {
+    width: 100%; /* Make the image take full width */
+    height: auto; /* Adjust height to maintain aspect ratio */
+  }
+
+  .contact-container h2 {
+    font-size: 20px; /* Smaller heading size */
+  }
+
+  .contact-container p {
+    font-size: 10px; /* Smaller paragraph font size */
+  }
+}
+
+
+/* Container Styling */
+.doctor-patient-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Title Styling */
+.doctor-patient-container h2 {
+  color: #1a2b4c;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Patient List Styling */
+.patient-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Patient Card */
+.patient-card {
+  display: flex;
+  align-items: center;
+  background: #f4f9ff;
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+.patient-card:hover {
+  background: #e0f0ff;
+  transform: translateY(-2px);
+}
+
+/* Patient Avatar */
+.patient-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+/* Patient Info */
+.patient-info {
+  text-align: left;
+}
+
+.patient-info strong {
+  font-size: 18px;
+  color: #1a2b4c;
+}
+
+.patient-info p {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* No Patients Found */
+.no-patients {
+  font-style: italic;
+  color: #777;
+  margin-top: 15px;
+}
+
+/* Loading Message */
+.loading-message {
+  text-align: center;
+  font-size: 16px;
+  color: #007bff;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* Impersonate Button */
+.impersonate-button {
+  margin-left: auto;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  background: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.impersonate-button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.impersonate-button:active {
+  background: #004494;
+  transform: translateY(0);
+}
+/* 📏 Image and Message Box Styling */
+.contt {
+  display: flex; /* Align the children side by side */
+  align-items: center; /* Vertically center the items */
+  gap: 20px; /* Space between the image and message box */
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .contt {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: center; /* Center-align the items */
+    gap: 20px; /* Space between the image and message box */
+  }
+
+  .telephone, .message-box {
+    width: 90%; /* Both the image and the message box take up 90% of the container width */
+  }
+}
+/* 📱 Responsive Design for tablets */
+@media (max-width: 1024px) {
+  .contt {
+    flex-direction: column; /* Stack items vertically on smaller screens (tablets) */
+    align-items: center; /* Center-align the items */
+    gap: 20px; /* Space between the image and message box */
+  }
+
+  .telephone, .message-box {
+    width: 90%; /* Both the image and the message box take up 90% of the container width */
+  }
+}
+
+/* 📏 For Larger Screens (Desktop) */
+@media (min-width: 1025px) {
+  .contt {
+    flex-direction: row; /* Side by side on larger screens */
+    align-items: center; /* Center vertically */
+    gap: 20px; /* Space between the image and message box */
+  }
+
+  .telephone {
+    width: 700px; /* Adjust width for the image */
+    height: 700px; /* Adjust height for the image */
+  }
+
+  .message-box {
+    width: 50%; /* Message box takes 50% width */
+  }
+}
+
+
+/* For larger screens (desktop), this is the default state */
+@media (min-width: 769px) {
+  .contt {
+    flex-direction: row; /* Keep items side by side */
+  }
+
+  .telephone {
+    width: 700px; /* Adjust width for the image */
+    height: 700px; /* Adjust height for the image */
+  }
+
+  .message-box {
+    width: 50%; /* Message box takes 50% width */
+  }
+}
+
+/* 📌 Dropdown */
+.dropdown {
+  position: relative;
+  width: 15%;
+}
+
+.dropdown-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 10px;
+  background: #053a73;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.dropdown-btn:hover {
+  background: #053a738c;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background: white;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  border-radius: 6px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-content label {
+  display: block;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-content label:hover {
+  background: #f0f0f0;
+}
+
+/* 📜 Message History */
+.message-history {
+  margin-top: 15px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.message-history ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.message-history li {
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
+}
+
+.patient {
+  color: #000000;
+}
+
+.doctor {
+  background: #d4dbed10;
+  color: #080841;
+}
+
+.input_msg {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between textarea and button */
+  margin-top: 10px;
+}
+
+/* 📝 Reply Box */
+.reply-box {
+  flex: 1; /* Takes up all available space */
+  min-height: 50px;
+  gap: 10px; /* Space between textarea and button */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  resize: none;
+  margin-top: 10px;
+}
+
+/* 📩 Send Button */
+.send-btn {
+  padding: 12px 15px;
+  font-size: 16px;
+  background: #053a73;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s;
+  white-space: nowrap; /* Prevents text from breaking */
+}
+
+.send-btn:hover {
+  background: #053a73ae;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 1024px) {
+  .cont {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .telephone, .message-box {
+    width: 80%; /* Smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .cont {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .telephone, .message-box {
+    width: 90%;
+  }
+
+  .doctor-patient-container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .doctor-patient-container h2 {
+    font-size: 22px;
+  }
+
+  .patient-list {
+    gap: 10px;
+  }
+
+  .patient-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .patient-avatar {
+    margin-bottom: 10px;
+  }
+
+  .patient-info strong {
+    font-size: 16px;
+  }
+
+  .patient-info p {
+    font-size: 12px;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .dropdown-btn {
+    font-size: 12px;
+  }
+
+  .reply-box {
+    font-size: 12px;
+  }
+
+  .send-btn {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .telephone {
+    width: 90%;
+    height: 500px;
+  }
+
+  .message-box {
+    width: 100%;
+  }
+
+  .doctor-patient-container {
+    margin: 15px auto;
+    padding: 10px;
+  }
+
+  .doctor-patient-container h2 {
+    font-size: 20px;
+  }
+
+  .patient-list {
+    gap: 8px;
+  }
+
+  .patient-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .patient-avatar {
+    margin-bottom: 8px;
+  }
+
+  .patient-info strong {
+    font-size: 14px;
+  }
+
+  .patient-info p {
+    font-size: 10px;
+  }
+
+  .dropdown-btn {
+    font-size: 14px;
+  }
+
+  .reply-box {
+    font-size: 10px;
+  }
+
+  .send-btn {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+}

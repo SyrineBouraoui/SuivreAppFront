@@ -1,0 +1,50 @@
+package com.example.suivreapp.service;
+
+
+import com.example.suivreapp.model.Message;
+import com.example.suivreapp.model.Patient;
+import com.example.suivreapp.repository.MessageRepository;
+import com.example.suivreapp.repository.PatientRepository;
+
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class MessageService {
+    private final MessageRepository messageRepository;
+    private  PatientRepository patientRepository;
+
+    
+
+    public MessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+
+    public Message sendMessage(Message message) {
+        return messageRepository.save(message);
+    }
+
+    public List<Message> getMessages(Long patientId, Long doctorId) {
+        return messageRepository.findByPatientIdAndDoctorId(patientId, doctorId);
+    }
+    public List<Message> getMessagesForDoctor(Long doctorId) {
+        List<Message> messages = messageRepository.findByDoctorId(doctorId);
+        
+        for (Message msg : messages) {
+            if (msg.getSender().equals("patient")) {
+                Optional<Patient> patientOpt = patientRepository.findById(msg.getPatientId());
+                if (patientOpt.isPresent()) {
+                    Patient patient = patientOpt.get();
+                    // If name is null, set to a fallback value
+                    String patientName = (patient.getName() != null) ? patient.getName() : "Unknown Patient";
+                    msg.setPatientName(patientName); // Set the patient name or fallback value
+                } else {
+                    msg.setPatientName("Unknown Patient");
+                }
+            }
+        }
+
+        return messages;
+    }
+}

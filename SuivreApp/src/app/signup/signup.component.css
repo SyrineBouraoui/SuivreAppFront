@@ -1,0 +1,165 @@
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(38, 53, 114);
+  padding: 20px 30px;
+  color: white;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: none;
+  cursor: pointer;
+}
+
+.logoo {
+  border-radius: 53%;
+  margin-right: 10px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.get-started {
+  background: #146e91;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Center the signup form */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #e0f2ff, #ffffff);
+}
+
+/* Signup form box */
+.signup-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  text-align: center;
+}
+
+/* Form title */
+.signup-box h2 {
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+.signup-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* New input field for doctor ID */
+.signup-box input[placeholder="ID du Docteur"] {
+  display: block; /* Make sure it's displayed */
+  margin-top: 10px; /* Adjust spacing */
+}
+
+/* Select Role dropdown */
+.signup-box select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Signup button */
+.signup-box button {
+  background-color: #003366;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.signup-box button:hover {
+  background-color: #0055a5;
+}
+
+/* Link for login */
+.signup-box p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup-box a {
+  color: #0055a5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signup-box a:hover {
+  text-decoration: underline;
+}
+
+/* Partners section */
+.partners {
+  background: linear-gradient(to right, #e0f2ff, #ffffff);
+  padding: 20px 0;
+  text-align: center;
+  margin: 0%;
+}
+
+.partners p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.partners-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.partners-logos img {
+  height: 80px; /* Adjust the size as needed */
+  max-width: 200px;
+}
+
+/* Add some additional spacing for better readability */
+.signup-box input, .signup-box select {
+  margin-top: 10px;
+}
+
+/* Hide the select field's default dropdown arrow for a cleaner look */
+.signup-box select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 20px;
+}

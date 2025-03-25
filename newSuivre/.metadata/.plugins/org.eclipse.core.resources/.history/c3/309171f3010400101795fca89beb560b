@@ -1,0 +1,44 @@
+package com.example.suivreapp.service;
+
+
+import com.example.suivreapp.model.Message;
+import com.example.suivreapp.model.Patient;
+import com.example.suivreapp.repository.MessageRepository;
+import com.example.suivreapp.repository.PatientRepository;
+
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class MessageService {
+    private final MessageRepository messageRepository;
+    private  PatientRepository patientRepository;
+
+    
+
+    public MessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+
+    public Message sendMessage(Message message) {
+        // Fetch patient data using the patientId from the message
+        Patient patient = patientRepository.findById(message.getPatientId()).orElse(null);
+        
+        if (patient != null && message.getPatientName() == null) {
+            // If patientName is not provided, fetch the patient's name from the patient entity
+            message.setPatientName(patient.getName()); // Assume Patient entity has getName() method
+        }
+        
+        // Save the message
+        return messageRepository.save(message);
+    }
+
+
+    public List<Message> getMessages(Long patientId, Long doctorId) {
+        return messageRepository.findByPatientIdAndDoctorId(patientId, doctorId);
+    }
+    public List<Message> getMessagesForDoctor(Long doctorId) {
+        return messageRepository.findByDoctorId( doctorId);
+
+}    }

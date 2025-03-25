@@ -1,0 +1,110 @@
+<div class="patient-container">
+  <!-- Header -->
+  <div class="containerr">
+      <header>
+          <div class="logo" routerLink="">
+          <img class="logoo" src="https://e7.pngegg.com/pngimages/972/761/png-clipart-stethoscope-medicine-nursing-health-care-physician-health-blue-logo-thumbnail.png" width="7%">
+          Headicare</div>
+        <nav>
+          <ul>
+           
+          
+            <li><a  href=#hello>Mes Patients</a></li>
+            <li><a href=#hello >Notification</a></li>
+            <li><a  href=#hello>Messagerie</a></li>
+          </ul>
+        </nav>
+        <button class="get-started" routerLink="/login">Log Out</button>
+      </header>
+
+
+              
+<div id="contact"class="cont">
+    
+  <div class="contact-container">
+ 
+
+    <div *ngIf="user">
+      <h2>Welcome, Dr. {{ user.username }}</h2>
+      
+    </div>
+      <h2>Bienvenue sur votre tableau de bord</h2>
+      <p>Surveillez vos signes vitaux en temps réel</p>
+    </div>
+  <img class="telephone" src="https://nimswandoor.com/v2/images/doctor1.jpg" alt="AI Solutuins"/>
+
+
+</div>
+
+
+<div class="doctor-patient-container">
+  <h2>Doctor's Patients</h2>
+  <div class="patient-list">
+    <div *ngFor="let patient of patients" class="patient-card">
+      <img src="https://static.vecteezy.com/ti/vecteur-libre/p1/2318271-icone-de-profil-utilisateur-vectoriel.jpg" alt="Patient Avatar" class="patient-avatar" />
+      <div class="patient-info">
+        <strong>{{ patient.name }}</strong>
+        <p>ID: {{ patient.id }}</p>
+      </div>
+      <!-- Add Impersonate Button -->
+      <button (click)="impersonatePatient(patient.id, patient.name)" class="impersonate-button">
+        Impersonate {{ patient.name }}
+      </button>
+    </div>
+    
+  </div>
+
+  <!-- Display message if no patients are found -->
+  <ng-template #noPatients>
+    <p class="no-patients">No patients found.</p>
+  </ng-template>
+</div>
+
+
+
+
+
+
+
+<div id="contact"class="contt">
+  <img class="telephone" src="https://img.freepik.com/premium-vector/online-medical-consultation-telemedicine-doctor-distant-advise-health-insurance-healthcare-services_1170970-421.jpg?semt=ais_hybrid" alt="AI Solutuins"/>
+
+<div class="message-box">
+  <h3>Messages des Patients</h3>
+
+  <!-- Sélection des patients via un dropdown -->
+  <div class="dropdown">
+    <button class="dropdown-btn" (click)="toggleDropdown()">
+      Sélectionner des patients 
+    </button>
+    <div class="dropdown-content" *ngIf="dropdownOpen">
+      <div *ngFor="let patient of patients">
+        <label>
+          <input type="checkbox" [(ngModel)]="patient.selected" (change)="logSelectedPatients()">
+          {{ patient.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+<!-- Historique des messages -->
+<div class="message-history">
+  <ul>
+    <li *ngFor="let msg of messageHistory">
+      <div>
+        <strong *ngIf="msg.sender === 'patient'">{{ msg.patientName }}:</strong>
+        <strong *ngIf="msg.sender === 'doctor'">You (Doctor):</strong>
+        {{ msg.content }}
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="input_msg">
+
+  <!-- Champ de réponse -->
+  <textarea [formControl]="doctorMessage" placeholder="Écrire un message..." class="reply-box"></textarea>
+  <button class="send-btn" (click)="sendMessageToSelectedPatients()">Envoyer</button>
+</div>
+</div>
+</div>

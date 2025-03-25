@@ -1,0 +1,141 @@
+<div class="patient-container">
+    <!-- Header -->
+    <div class="containerr">
+        <header>
+          <div class="logo" (click)="goToHome()">
+            <img class="logoo" src="https://e7.pngegg.com/pngimages/972/761/png-clipart-stethoscope-medicine-nursing-health-care-physician-health-blue-logo-thumbnail.png" width="7%">
+            Headicare</div>
+          <nav>
+            <ul>
+             
+              <li><a href=#hello >Notification</a></li>
+              <li><a  href=#hello>Messagerie</a></li>
+            </ul>
+          </nav>
+          <button class="get-started"  (click)="logout()">Log Out</button>
+        </header>
+  
+
+        
+<div id="contact"class="cont">
+    
+    <div class="contact-container">
+      <div *ngIf="user">
+        
+          <h2>Welcome, {{ user.user?.username  }}</h2>  
+          <h2>Welcome to the patient's Dashboard</h2>
+
+        
+      </div>
+        <h2>Bienvenue sur votre tableau de bord</h2>
+        <p>Surveillez vos signes vitaux en temps réel</p>
+      </div>
+    <img class="telephone" src="https://static.vecteezy.com/ti/vecteur-libre/p1/3659519-medecin-verifiant-un-patient-en-chambre-d-hopital-fond-illustrationle-traitement-medical-avec-patients-pour-soins-de-sante-consultation-et-examen-sante-vectoriel.jpg" alt="AI Solutuins"/>
+  
+  
+</div>
+
+
+
+
+<section class="dashboard">
+  <div class="container">
+    <!-- Section Gauche : Les cartes des mesures -->
+    <div class="dashboard">
+      <div class="card" [ngClass]="getCardClass('heartRate', heartRate)">
+        <h3>Fréquence Cardiaque</h3>
+        <p>{{ heartRate }} BPM</p>
+      </div>
+      <div class="card" [ngClass]="getCardClass('temperature', temperature)">
+        <h3>Température</h3>
+        <p>{{ temperature }} °C</p>
+      </div>
+      <div class="card" [ngClass]="getCardClass('oxygen', oxygen)">
+        <h3>Taux d'Oxygène</h3>
+        <p>{{ oxygen }} %</p>
+      </div>
+      <div class="card" [ngClass]="getCardClass('airTemperature', airTemperature)">
+        <h3>Température de l'Air</h3>
+        <p>{{ airTemperature }} °C</p>
+      </div>
+    </div>
+
+    <!-- Section Droite : État de Santé Général -->
+    <div class="health-status">
+      <h2>État de Santé Général</h2>
+      <p>Votre état de santé est 
+        <strong [ngStyle]="{'color': getHealthColor()}">
+          {{ healthStatus }}
+        </strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<div class="charts-container">
+  <div class="chart">
+    <h3>Fréquence Cardiaque</h3>
+    <canvas #heartRateChart></canvas>
+  </div>
+
+  <div class="chart">
+    <h3>Température</h3>
+    <canvas #temperatureChart></canvas>
+  </div>
+
+  <div class="chart">
+    <h3>Taux d'Oxygène</h3>
+    <canvas #oxygenChart></canvas>
+  </div>
+
+  <div class="chart">
+    <h3>Température de l'Air</h3>
+    <canvas #airTempChart></canvas>
+  </div>
+</div>
+
+
+<section id="hello" class="hello">
+
+  
+  <!-- Message Section -->
+  <!-- Message Section -->
+<div class="message-box">
+  <h3>Send a Message to Your Doctor</h3>
+  
+  
+  <div class="message-history">
+    <h4>Message History:</h4>
+    <ul>
+      <li *ngFor="let msg of messageHistory">
+        <strong *ngIf="msg.sender === 'patient'">You:</strong>
+        <strong *ngIf="msg.sender === 'doctor'">Doctor:</strong>
+        {{ msg.content }}
+      </li>
+    </ul>
+  </div>
+  <textarea [(ngModel)]="patientMessage" placeholder="Write your message..."></textarea>
+  <button class="send-btn" (click)="sendMessage()">Send Message</button>
+
+</div>
+
+
+  
+  <div class="notifications-container">
+    
+    <div *ngIf="notifications.length > 0" class="notification-list">
+      <div *ngFor="let notification of notifications" class="notification-item">
+        {{ notification }}
+      </div>
+    </div>
+    <div class="helllo">
+
+      <h2>Notifications</h2>
+      <button class="alert-btn" (click)="sendAlert()"> Send Emergency Alert</button>
+    </div>
+    
+  
+  </div>
+  
+</section>

@@ -1,0 +1,604 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Container Styling */
+.container {
+  width: 100%;
+  background: white;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(38, 53, 114);
+  padding: 20px 30px;
+  color: white;
+}
+
+.logo {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+.logoo{
+  border-radius: 53%;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.get-started {
+  background: #146e91;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+
+/* General Styles for Hero Section */
+.hero {
+  background-image: url(https://static.vecteezy.com/system/resources/previews/023/460/068/non_2x/medical-doctor-background-illustration-ai-generative-free-photo.jpg);
+  background-size: cover; /* Ensures the image covers the entire hero section */
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Full viewport height */
+  align-items: center;
+  position: relative;
+  display: flex;
+}
+
+.hero-text {
+  text-align: center;
+  color: #0077b6;
+   padding: 0 20px;
+  z-index: 2;
+  
+}
+
+.hero h1 {
+  font-size: 3rem; /* Larger text by default */
+  line-height: 1.2;
+  margin-left: 0px;
+  margin-top: 200px;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+button.primary, button.secondary {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+
+button.primary {
+  background-color: #007bff;
+  color: white;
+  margin-right: 2%;
+}
+
+button.secondary {
+  background-color: #f8f9fa;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+button.primary:hover, button.secondary:hover {
+  opacity: 0.8;
+}
+
+/* Section Description */
+.description {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.description h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #0056b3;
+}
+
+.description p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+
+/* Media Query for Smaller Screens */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem; /* Reduce text size */
+    line-height: 1.2;
+  }
+
+  .buttons {
+    margin-top: 15px;
+  }
+
+  button.primary, button.secondary {
+    padding: 12px 25px; /* Reduce padding for smaller buttons */
+    font-size: 1rem; /* Smaller font size */
+  }
+  
+  .description h3 {
+    font-size: 1.8rem; /* Smaller header */
+  }
+  
+  .description p {
+    font-size: 1rem; /* Smaller paragraph font */
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem; /* Even smaller text for very small screens */
+  }
+
+  button.primary, button.secondary {
+    padding: 10px 20px; /* Even smaller buttons */
+    font-size: 0.9rem;
+  }
+  
+  .description h3 {
+    font-size: 1.6rem;
+  }
+
+  .description p {
+    font-size: 0.9rem; /* Smaller paragraph font */
+  }
+}
+
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  align-items: center;
+  justify-items: center;
+  max-width: 600px;
+  margin: 0% 0% 0% 50%;
+  margin-bottom: 10%;
+}
+
+.step {
+  background-color: #5eb4a9;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  width: 250px;
+  position: relative;
+}
+
+.number {
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: white;
+  color: #5eb4a8;
+  padding: 5px 12px;
+  border-radius: 8px;
+}
+
+/* Arrow Styling */
+.arrow-down, .arrow-right, .arrow-left, .arrow-up {
+  width: 30px;
+  height: 30px;
+  border: solid #5eb4a8;
+  border-width: 0 0 0 0;
+  position: absolute;
+}
+
+/* Title Styling */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #5eb4a9;
+  margin-left: 15%;
+  margin-top: 6%;
+  width: 200px;
+}
+
+.wrap-container {
+  background-color: rgba(214, 226, 230, 0.352);
+  margin-top: 0px;
+}
+
+.partners {
+  background-color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin: 0%;
+}
+
+.partners p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.partners-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.partners-logos img {
+  height: 80px;
+  max-width: 200px;
+}
+
+/* Description Section */
+.descriptionn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+  background-color: white;
+  flex-wrap: wrap;  /* Allow wrapping on smaller screens */
+}
+
+.left-section {
+  flex: 1;
+  padding: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #5eb4a9;
+  text-align: left;
+  margin-right: 0px;
+  margin-bottom: 30px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  
+  gap: 39px;
+  flex: 3;
+  color: #0056b3;
+  flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+  justify-content: space-evenly; /* Ensure cards are evenly spaced */
+}
+
+.card {
+  background-color: #e3efff;
+  padding: 30px;
+  text-align: center;
+  border-radius: 50px;
+  width: 220px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.iconb {
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.iconb img {
+  width: 9%;
+}
+
+.card h3 {
+  font-size: 21px;
+  font-weight: bold;
+  color: #1e2a6c;
+  margin: 10px 0;
+}
+
+.card p {
+  font-size: 16px; /* Adjusted font size for readability */
+  color: #333;
+}
+
+/* Card hover effect */
+.card {
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  border: 2px solid #3498db;
+  transform: translateY(-10px);
+}
+
+/* Media Query for Tablets (screen width below 768px) */
+@media (max-width: 768px) {
+  .descriptionn {
+    padding: 30px 20px; /* Reduced padding for smaller screens */
+    flex-direction: column; /* Stack sections vertically */
+    align-items: center; /* Center align for better layout */
+  }
+
+  .left-section {
+    margin-right: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem; /* Slightly smaller text */
+    text-align: center; /* Center text for better alignment */
+  }
+
+  .cards-container {
+    flex-direction: column; /* Stack cards vertically */
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%; /* Allow cards to take full width */
+    max-width: 300px; /* Max width for cards */
+    padding: 20px; /* Reduce padding */
+  }
+
+  .card h3 {
+    font-size: 18px; /* Slightly smaller heading */
+  }
+
+  .card p {
+    font-size: 14px; /* Smaller text */
+  }
+}
+
+/* Media Query for Mobile (screen width below 480px) */
+@media (max-width: 480px) {
+  .descriptionn {
+    padding: 20px 10px; /* Even more reduced padding */
+  }
+
+  .left-section {
+    font-size: 1.3rem; /* Smaller text for mobile */
+    text-align: center;
+  }
+
+  .cards-container {
+    gap: 15px;
+  }
+
+  .card {
+    width: 100%; /* Full-width cards for mobile */
+    padding: 15px; /* Smaller padding */
+  }
+
+  .card h3 {
+    font-size: 16px; /* Even smaller heading */
+  }
+
+  .card p {
+    font-size: 12px; /* Small paragraph font */
+  }
+}
+
+/* Contact Form Section */
+.cont {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.telephone {
+  width: 700px;
+  height: 700px;
+}
+
+.contact-container {
+  flex: 1;
+  max-width: 700px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.contact-container h2 {
+  font-size: 40px;
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+.contact-container p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.contact-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-container input,
+.contact-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.contact-container button {
+  background: #0056b3;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.contact-container button:hover {
+  background: #053a73;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+  header {
+    padding: 15px 25px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  nav ul li a {
+    font-size: 14px;
+  }
+
+  .get-started {
+    font-size: 14px;
+  }
+
+  .steps-container {
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+
+  .card {
+    width: 90%;
+  }
+
+  .cont {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .telephone {
+    width: 80%;
+    height: auto;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  header {
+    padding: 10px 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  nav ul li a {
+    font-size: 12px;
+  }
+
+  .get-started {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .steps-container {
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+
+  .hero-text h1 {
+    font-size: 24px;
+    margin-top: 120px;
+  }
+
+  .buttons {
+    margin-top: 10px;
+  }
+
+  .card {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .wrap-container {
+    margin-top: 50px;
+  }
+
+  .telephone {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Mobile Portrait (max-width: 480px) */
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .get-started {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+
+  .steps-container {
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+
+  .hero-text h1 {
+    font-size: 20px;
+    margin-top: 100px;
+  }
+
+  .buttons {
+    margin-top: 8px;
+  }
+
+  .card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .cont {
+    flex-direction: column;
+  }
+
+  .telephone {
+    width: 100%;
+    height: auto;
+  }
+}

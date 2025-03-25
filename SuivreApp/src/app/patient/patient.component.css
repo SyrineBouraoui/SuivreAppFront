@@ -1,0 +1,525 @@
+.patient-container {
+  font-family: Arial, sans-serif;
+}
+
+.containerr {
+  width: 100%;
+  background: white;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(38, 53, 114);
+  padding: 20px 30px;
+  color: white;
+  font-size: 18px; /* Default font size for larger screens */
+}
+
+.logo {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: none;
+}
+.logoo {
+  border-radius: 53%;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.get-started {
+  background: #146e91;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Add responsive media queries for smaller screens */
+@media (max-width: 1024px) {
+  header {
+    font-size: 16px; /* Slightly smaller font size for tablets */
+    padding: 15px 25px; /* Adjust header padding */
+  }
+
+  .logo {
+    font-size: 22px; /* Slightly smaller logo font size */
+  }
+
+  nav ul li a {
+    font-size: 14px; /* Smaller font size for navigation links */
+  }
+
+  .get-started {
+    font-size: 14px; /* Smaller button text */
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    font-size: 14px; /* Smaller font size for phones */
+    padding: 10px 20px; /* Adjust header padding */
+  }
+
+  .logo {
+    font-size: 20px; /* Smaller logo font size */
+  }
+
+  nav ul li a {
+    font-size: 12px; /* Even smaller font size for navigation links */
+  }
+
+  .get-started {
+    font-size: 12px; /* Smaller button text */
+    padding: 8px 12px; /* Adjust button padding */
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    font-size: 12px; /* Even smaller font size for very small screens */
+    padding: 8px 15px; /* Adjust header padding */
+  }
+
+  .logo {
+    font-size: 18px; /* Even smaller logo font size */
+  }
+
+  nav ul li a {
+    font-size: 10px; /* Very small font size for navigation links */
+  }
+
+  .get-started {
+    font-size: 10px; /* Very small button text */
+    padding: 6px 10px; /* Adjust button padding */
+  }
+}
+
+/* Container Styling */
+.cont {
+  display: flex; /* Aligns children in a row */
+  align-items: center; /* Vertically centers the items */
+  gap: 20px; /* Space between the image and the container */
+  flex-wrap: wrap; /* Allows wrapping of items on smaller screens */
+}
+
+.telephone {
+  width: 600px; /* Default width */
+  height: 600px; /* Default height */
+}
+
+.contact-container {
+  flex: 1;
+  text-align: center;
+}
+
+/* Contact Container Heading */
+.contact-container h2 {
+  font-size: 40px;
+  color: #1e456f;
+  margin-bottom: 10px;
+  font-family: poppins;
+}
+
+/* Contact Container Paragraph */
+.contact-container p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* 📱 Responsive Design for Cont */
+@media (max-width: 1024px) {
+  .cont {
+    gap: 15px; /* Reduce gap on tablets */
+    flex-direction: column; /* Stack items on smaller screens */
+    align-items: center; /* Center-align items */
+  }
+
+  .telephone {
+    width: 80%; /* Scale the image on tablets */
+    height: 80%;
+  }
+
+  .contact-container h2 {
+    font-size: 30px; /* Smaller heading size */
+  }
+
+  .contact-container p {
+    font-size: 12px; /* Smaller paragraph font size */
+  }
+}
+
+@media (max-width: 768px) {
+  .cont {
+    gap: 10px; /* Reduce gap on phones */
+    flex-direction: column; /* Stack items */
+    align-items: center; /* Center-align items */
+  }
+
+  .telephone {
+    width: 90%; /* Further scale the image */
+    height: 90%; /* Further scale the height */
+  }
+
+  .contact-container h2 {
+    font-size: 25px; /* Smaller heading size */
+  }
+
+  .contact-container p {
+    font-size: 11px; /* Smaller paragraph font size */
+  }
+}
+
+@media (max-width: 480px) {
+  .cont {
+    gap: 8px; /* Reduce gap on very small screens */
+    flex-direction: column; /* Stack items */
+    align-items: center; /* Center-align items */
+  }
+
+  .telephone {
+    width: 100%; /* Make the image take full width */
+    height: auto; /* Adjust height to maintain aspect ratio */
+  }
+
+  .contact-container h2 {
+    font-size: 20px; /* Smaller heading size */
+  }
+
+  .contact-container p {
+    font-size: 10px; /* Smaller paragraph font size */
+  }
+}
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  background-color: #5eb4a911;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-left: 8px solid transparent;
+}
+
+/* Dynamic Colors */
+.healthy {
+  border-left-color: green;
+}
+
+.warning {
+  border-left-color: orange;
+}
+
+.danger {
+  border-left-color: red;
+}
+
+.health-status {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  text-align: center;
+  width: 100%; /* Make it flexible */
+
+  width: 700px;
+  margin: 0 auto; /* Center it horizontally */
+  margin-top: 6%;
+  flex: 1;
+}
+/* 📱 Responsive Design for medium screens */
+@media (max-width: 1224px) {
+  .health-status {
+    width: 70%; /* Reduce the width to fit smaller screens */
+    margin-top: 6%;
+    margin-left: 12%;
+    
+  }
+}
+@media (max-width: 1024px) {
+  .health-status {
+    width: 50%; /* Reduce the width to fit smaller screens */
+    margin-top: 6%;
+  }
+}
+
+@media (max-width: 768px) {
+  .health-status {
+    width: 90%; /* Further reduce width for smaller screens like tablets */
+    margin-top: 6%;
+  }
+}
+
+@media (max-width: 480px) {
+  .health-status {
+    width: 100%; /* Full width on very small screens */
+    margin-top: 6%;
+  }
+}
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding-top: 50px;
+  padding: 50px;
+  background-color: #5eb4a911;
+}
+
+.chart {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+.hello {
+  display: flex;
+  gap: 20px;
+  background-color: #5eb4a911;
+  padding: 20px;
+}
+
+/* Notifications & Message Box */
+.notifications-container, .message-box {
+  width: 48%;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  transition: 0.3s;
+}
+
+.notifications-message-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 90%;
+  margin: 20px auto;
+}
+
+.notifications-container h2, .message-box h3 {
+  text-align: center;
+  font-size: 20px;
+  color: #333;
+}
+
+.alert-btn, .send-btn {
+  width: 25%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+/* Style for alert-btn */
+.alert-btn {
+  background: #500e0e;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  display: inline-block;  /* Make it inline block to be in the flow of its container */
+  margin-left: auto;      /* This will push it to the right of its container */
+}
+
+/* Hover effect for alert-btn */
+.alert-btn:hover {
+  background: #b71c1c;
+}
+
+/* If you want to adjust placement inside a parent flex container */
+.helllo {
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the right */
+  gap: 20px;
+  margin-top: 15%;
+}
+
+
+.notification-list {
+  margin-top: 10px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  background: #ffe6e6;
+  color: #b71c1c;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Message Box */
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+  font-size: 14px;
+}
+
+.send-btn {
+  background: #1565c0;
+  color: white;
+  margin-top: 10px;
+}
+
+.send-btn:hover {
+  background: #0d47a1;
+}
+/* 📜 Message History */
+.message-history {
+  margin-top: 15px;
+  margin-bottom: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.message-history ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.message-history li {
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
+}
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container, .charts-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .telephone {
+    width: 80%;
+    height: 80%;
+  }
+
+  .health-status {
+    width: 80%;
+    margin-left: 0;
+    margin-top: 6%;
+  }
+
+  .message-box, .notifications-container {
+    width: 100%;
+  }
+.dashboard{
+  gap:20%;
+  margin-bottom: 16%;
+}
+  .card {
+    width: 100%;
+   
+  }
+}
+
+@media (max-width: 768px) {
+  .container, .charts-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .health-status {
+    width: 90%;
+  }
+
+  .message-box, .notifications-container {
+    width: 100%;
+  }
+
+  .send-btn, .alert-btn {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+  .card {
+    width: 100%;
+    gap: 10%;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+    gap: 20px;
+
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .telephone {
+    width: 90%;
+    height: auto;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .message-history {
+    font-size: 12px;
+  }
+
+  .send-btn, .alert-btn {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+}

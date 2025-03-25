@@ -1,0 +1,27 @@
+# Frontend (Node.js) - SuivreApp
+SuivreApp/node_modules/
+SuivreApp/dist/
+SuivreApp/build/
+SuivreApp/.npm/
+SuivreApp/.npmrc
+SuivreApp/yarn.lock
+SuivreApp/package-lock.json
+SuivreApp/.env
+
+# Backend (Spring Boot) - new_suivre
+newSuivre/target/
+newSuivre/*.log
+newSuivre/*.jar
+newSuivre/*.war
+newSuivre/*.ear
+newSuivre/!.mvn/wrapper/maven-wrapper.jar
+newSuivre/mvnw
+newSuivre/mvnw.cmd
+
+# IDE & OS Specific Files
+.idea/
+.vscode/
+*.iml
+*.swp
+Thumbs.db
+.DS_Store
