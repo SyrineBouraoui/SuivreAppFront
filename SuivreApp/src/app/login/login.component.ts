@@ -70,6 +70,7 @@ loginUser() {
 
 
 
+
 private saveUserData(response: any): void {
   // Save the token from the response
   localStorage.setItem('token', response.token);  // Save token
@@ -103,7 +104,11 @@ private redirectUser(response: any): void {
     console.log('Navigating to /patient/' + response.patientId);
     // Redirect to patient dashboard using patientId
     this.router.navigate([`/patient`, response.patientId]);
-  } else {
+  }else if (role === 'ADMIN') {
+    console.log('Navigating to /admin');
+    this.router.navigate(['/admin']);
+  }
+   else {
     this.errorMessage = 'Invalid role detected. Please contact support.';
   }
 }

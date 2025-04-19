@@ -14,6 +14,9 @@ import { AuthGuard } from './auth.guard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './admin/admin.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 
@@ -21,8 +24,10 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     HomeComponent,
-  
-    DoctorComponent
+    DoctorComponent,
+    AdminComponent,
+    NotFoundComponent,
+    ForgotPasswordComponent,
    
   ],
   imports: [
@@ -34,6 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     SignupComponent,  // Importer directement le composant ici
     LoginComponent,   // Importer directement le composant ici*
     FontAwesomeModule,
+    
     HttpClientModule,
     
    

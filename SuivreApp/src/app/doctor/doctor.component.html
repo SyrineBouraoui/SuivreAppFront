@@ -38,7 +38,7 @@
 
 
 <div class="doctor-patient-container">
-  <h2>Doctor's Patients</h2>
+  <h2>La liste de vos patients</h2>
   <div class="patient-list">
     <div *ngFor="let patient of patients" class="patient-card">
       <img src="https://static.vecteezy.com/ti/vecteur-libre/p1/2318271-icone-de-profil-utilisateur-vectoriel.jpg" alt="Patient Avatar" class="patient-avatar" />
@@ -48,7 +48,7 @@
       </div>
       <!-- Add Impersonate Button -->
       <button (click)="impersonatePatient(patient.id, patient.name)" class="impersonate-button">
-        Impersonate {{ patient.name }}
+        Voir le profil de {{ patient.name }}
       </button>
     </div>
     
@@ -56,7 +56,7 @@
 
   <!-- Display message if no patients are found -->
   <ng-template #noPatients>
-    <p class="no-patients">No patients found.</p>
+    <p class="no-patients">La liste des patients est vide. </p>
   </ng-template>
 </div>
 

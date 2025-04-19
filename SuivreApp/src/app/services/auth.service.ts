@@ -121,4 +121,18 @@ logout() {
     sessionStorage.clear();  // Use sessionStorage.clear() instead of localStorage.clear()
     this.router.navigate(['/login']);  // Redirect to login page
 }
+
+
+  // Method to send reset password email
+  sendResetPasswordEmail(email: string): Observable<string> {
+    const url = `${this.apiUrl}/forgot-password`;
+    return this.http.post<string>(url, { email }, { responseType: 'text' as 'json' });
+  }
+
+  // Method to reset the password
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const url = `${this.apiUrl}/reset-password`;
+    return this.http.post(url, { token, newPassword });
+  }
+
 }

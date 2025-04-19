@@ -131,3 +131,21 @@ header {
     height: 80px; /* Ajustez la taille selon vos besoins */
     max-width: 200px;
   }
+
+
+  .forgot-password {
+    display: block;
+    text-align: right;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #0055a5;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .forgot-password:hover {
+    color: #003366;
+    text-decoration: underline;
+  }
+  

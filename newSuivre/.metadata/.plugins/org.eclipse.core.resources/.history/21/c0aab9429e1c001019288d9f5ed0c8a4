@@ -1,0 +1,108 @@
+
+
+package com.example.suivreapp.service;
+
+import io.jsonwebtoken.security.Keys;
+
+
+
+import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+
+import io.jsonwebtoken.JwtException;
+
+import com.example.suivreapp.model.Patient;
+import com.example.suivreapp.model.User;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+
+
+
+
+
+
+
+import io.jsonwebtoken.*;
+
+import java.util.*;
+
+@Service
+public class JwtService {
+
+    // 256-bit secret key for regular authentication
+    public static final String SECRET_KEY = "39C9467AE5638297DD42C9F133C61" + "39C9467AE5638297DD42C9F133C61"; 
+
+    // Reset secret key (use a strong secret key for production)
+    private static final String RESET_SECRET_KEY = "]=hC'y&cN1Yl?EzR*#fXPT!0`fLjDu/|V>sdQ{`(vj$LmhnX4af$y0M}]o#X839Y";
+    private long resetTokenExpiration = 86400000;  // 24 hours expiration time for reset token
+    private long jwtExpiration = 3600000;  // 1 hour expiration time for regular auth token
+
+    // Generate reset token (for password reset)
+    public String generateResetToken(String email) {
+        return Jwts.builder()
+            .setSubject(email)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + resetTokenExpiration))
+            .signWith(SignatureAlgorithm.HS512, RESET_SECRET_KEY)
+            .compact();
+    }
+
+    // Validate reset token
+    public boolean validateResetToken(String token) {
+        try {
+            extractEmailFromResetToken(token);  // Validate using reset secret key
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            System.out.println("Invalid reset token: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Extract email from reset token
+    public String extractEmailFromResetToken(String token) {
+        Claims claims = extractAllClaims(token, RESET_SECRET_KEY);
+        return claims.getSubject();  // Extract email from the token
+    }
+
+    // Extract all claims from JWT token
+    private Claims extractAllClaims(String token, String secretKey) {
+        return Jwts.parserBuilder()
+            .setSigningKey(secretKey)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+    }
+
+    // Check if the token has expired
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    // Extract expiration date from token
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration, RESET_SECRET_KEY);
+    }
+
+    // Extract claim (e.g., expiration) from JWT token
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver, String secretKey) {
+        final Claims claims = extractAllClaims(token, secretKey);
+        return claimsResolver.apply(claims);
+    }
+}

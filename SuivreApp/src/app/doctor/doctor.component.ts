@@ -87,7 +87,7 @@ loadMessages() {
 
 sendMessageToSelectedPatients() {
     if (!this.doctorId) {
-      console.error("🚨 Doctor ID is missing! Fetching from sessionStorage...");
+      console.error(" Doctor ID is missing! Fetching from sessionStorage...");
       this.doctorId = sessionStorage.getItem('doctorId') || '';
     }
   
@@ -96,7 +96,7 @@ sendMessageToSelectedPatients() {
       return;
     }
   
-    console.log("✅ Using doctorId:", this.doctorId); // Debugging
+    console.log(" Using doctorId:", this.doctorId); // Debugging
     const messageContent = this.doctorMessage.value?.trim();
     if (!messageContent) return;
   
@@ -115,15 +115,15 @@ sendMessageToSelectedPatients() {
         patientName: this.patientName
       };
   
-      console.log("📨 Sending message:", message); // Debugging
+      console.log(" Sending message:", message); // Debugging
   
       this.messageService.sendMessage(message).subscribe(
         (msg) => {
-          console.log("✅ Message sent successfully:", msg);
+          console.log(" Message sent successfully:", msg);
           this.messageHistory.push(msg);
         },
         (error) => {
-          console.error("❌ Failed to send message:", error);
+          console.error(" Failed to send message:", error);
         }
       );
     });

@@ -1,0 +1,7 @@
+package com.example.suivreapp.repository;
+
+import com.example.suivreapp.model.SensorData;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SensorRepository extends JpaRepository<SensorData, Long> {
+}

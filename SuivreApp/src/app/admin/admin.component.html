@@ -1,0 +1,90 @@
+
+<header>
+  <div class="logo">
+      <img class="logoo" src="https://e7.pngegg.com/pngimages/972/761/png-clipart-stethoscope-medicine-nursing-health-care-physician-health-blue-logo-thumbnail.png" width="7%">
+      Headicare
+    </div>
+    <button class="get-started" routerLink="/login">Log Out</button>
+</header>
+<div class="admine">
+
+  
+  <div class="admin-container">
+    <h2>Page Admin</h2>
+    
+    <!-- Add New User Button -->
+    <button (click)="openAddModal()">Ajouter un nouveau utilisateur</button>
+    
+    <!-- Debug: Show the users array -->
+    
+    
+    <!-- Table to display users -->
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Username</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.username }}</td>
+          <td>
+            <button (click)="openEditModal(user)">Modifier</button>
+            <button (click)="deleteUser(user.id)">Supprimer</button>
+          </td>
+        </tr>
+        <tr *ngIf="!users || users.length === 0">
+          <td colspan="5">No users found.</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Modal for adding/editing users -->
+    <div *ngIf="showModal" class="modal">
+      <h3>{{ isEditing ? 'Edit User' : 'Add New User' }}</h3>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <form (ngSubmit)="submitForm()">
+        <label>
+          Email:
+          <input [(ngModel)]="selectedUser.email" name="email" required />
+        </label>
+        <label *ngIf="!isEditing">
+          Password:
+          <input [(ngModel)]="selectedUser.password" name="password" type="password" required />
+        </label>
+        <label>
+          Role:
+          <select [(ngModel)]="selectedUser.role" name="role" required>
+            <option value="" disabled>Select a role</option>
+            <option value="PATIENT">Patient</option>
+            <option value="DOCTOR">Doctor</option>
+          </select>
+        </label>
+        <label *ngIf="selectedUser.role === 'PATIENT'">
+          Doctor:
+          <select [(ngModel)]="selectedUser.doctorId" name="doctorId" required>
+            <option [ngValue]="null" disabled>Select a doctor</option>
+            <option *ngFor="let doctor of doctors" [ngValue]="doctor.id">
+              {{ doctor.username }} (Doctor ID: {{ doctor.id }})
+            </option>
+          </select>
+        </label>
+        <label>
+          Username:
+          <input [(ngModel)]="selectedUser.username" name="username" required />
+        </label>
+        <div class="modal-actions">
+          <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
+          <button type="button" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

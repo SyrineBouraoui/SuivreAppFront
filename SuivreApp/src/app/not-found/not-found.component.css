@@ -1,0 +1,84 @@
+/* 404 Page Styles */
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(230, 240, 250, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%), 
+                url('https://img.freepik.com/vecteurs-libre/page-non-trouvee-illustration-du-concept_114360-1869.jpg') no-repeat center bottom;
+    background-size: contain; /* Ensures the illustration fits nicely */
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #1a3c5e; /* Dark blue from website's header */
+    position: relative;
+    padding: 20px;
+    animation: backgroundFade 2s ease-in-out; /* Subtle animation for the background */
+}
+
+/* Animation for the Background */
+@keyframes backgroundFade {
+    0% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 404 Heading */
+.not-found h1 {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #005b96; /* Blue from website's buttons */
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Ensures text is above background */
+}
+
+/* Paragraph Text */
+.not-found p {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: #1a3c5e;
+    z-index: 1;
+}
+
+/* Button/Link Styles */
+.not-found a {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #005b96; /* Matches website's button color */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 25px; /* Rounded like the button in the provided image */
+    font-size: 1rem;
+    border: 2px solid #005b96;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    z-index: 1;
+}
+
+.not-found a:hover {
+    background-color: #ffffff;
+    color: #005b96;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .not-found h1 {
+        font-size: 4rem;
+    }
+    .not-found p {
+        font-size: 1.2rem;
+    }
+    .not-found a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    .not-found {
+        background-size: 80%; /* Adjusts background image size for smaller screens */
+    }
+}

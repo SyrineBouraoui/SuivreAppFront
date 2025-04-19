@@ -1,0 +1,189 @@
+package com.example.suivreapp.service;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+
+import io.jsonwebtoken.JwtException;
+
+import com.example.suivreapp.model.Patient;
+import com.example.suivreapp.model.User;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+@Service
+
+public class JwtService {
+
+
+	    // 256-bit secret key (32 bytes)
+	    private static final String SECRET_KEY = "39C9467AE5638297DD42C9F133C61" + "39C9467AE5638297DD42C9F133C61";  // Example of extending your key to 256 bits
+
+	    private long jwtExpiration = 3600000;  // 1 hour expiration time (adjust if needed)
+	    private long refreshExpiration = 86400000;  // 1 day expiration time for refresh token
+
+	 // Ensure the role is added to the JWT token in the claims
+	    public String generateToken(User user) {
+	    	// Debugging - Check if the User object is null
+	    	if (user == null) {
+	    	    System.out.println("User is null in JwtService");
+	    	} else {
+	    	    System.out.println("User details: " + user.toString());
+	    	 
+	            
+	        }
+	    	
+	        Map<String, Object> claims = new HashMap<>();
+	        claims.put("role", user.getRole());
+	        claims.put("id", user.getId());
+	        claims.put("authorities", user.getAuthorities().stream()
+	            .map(GrantedAuthority::getAuthority)
+	            .collect(Collectors.toList()));
+
+	        long expiration = 3600000;  // 1 hour
+	        return buildToken(claims, user, expiration);
+	    }
+
+	    public String generateToken(Patient patient) {
+	        if (patient == null) {
+	            System.out.println("Patient is null in JwtService");
+	        } else {
+	            System.out.println("Patient details: " + patient.toString());
+	        }
+
+	        Map<String, Object> claims = new HashMap<>();
+	        claims.put("role", "PATIENT");  // Set the role manually for the patient
+	        claims.put("id", String.valueOf(patient.getId()));  // Convert Long to String
+	        claims.put("authorities", List.of("ROLE_PATIENT")); // Add role as a list if needed
+
+	        long expiration = 3600000;  // 1 hour
+	        return buildToken(claims, patient, expiration);
+	    }
+
+	    
+
+	    public String extractRole(String token) {
+	        return extractClaim(token, claims -> claims.get("role", String.class));  // Extract the role from JWT
+	    }
+
+	    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+	        return buildToken(extraClaims, userDetails, jwtExpiration);
+	    }
+
+	    public String generateRefreshToken(UserDetails userDetails) {
+	        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
+	    }
+
+	    public String buildToken(Map<String, Object> claims, Object userOrPatient, long expiration) {
+	        if (claims == null || userOrPatient == null) {
+	            throw new IllegalArgumentException("Claims or user/patient cannot be null");
+	        }
+
+	        // Check if the object is an instance of UserDetails (the original type)
+	        if (userOrPatient instanceof UserDetails) {
+	            UserDetails userDetails = (UserDetails) userOrPatient;
+
+	            // Collect the roles from authorities, handle empty authorities gracefully
+	            List<String> roles = userDetails.getAuthorities().stream()
+	                .map(GrantedAuthority::getAuthority)
+	                .collect(Collectors.toList());
+	            claims.put("role", roles.isEmpty() ? List.of("DEFAULT_ROLE") : roles);  // Default role if empty
+
+	            // Assuming the user has an ID (or username as ID)
+	            claims.put("id", userDetails.getUsername()); // Ensure the ID is correct here
+	        } 
+	        // Or check if it's a Patient
+	        else if (userOrPatient instanceof Patient) {
+	            Patient patient = (Patient) userOrPatient;
+
+	            // Set the role for the patient and their ID
+	            claims.put("role", "PATIENT");
+	            claims.put("id", patient.getUser().toString()); // Ensure it's a String
+
+	            
+// Ensure this is a String or can be cast to one
+	        } else {
+
+	            throw new IllegalArgumentException("Invalid user type for token generation: " + userOrPatient.getClass().getName());
+	            
+	        }
+
+	        // Safely retrieve the "id" and cast it to String
+	        Object id = claims.get("id");
+
+	        if (id == null || !(id instanceof String)) {
+
+	            throw new IllegalArgumentException("ID is missing or not of the correct type in claims.");
+	        }
+
+	        // Define your JWT expiration and creation logic here...
+	        return Jwts.builder()
+	            .setClaims(claims)
+	            .setSubject((String) id)  // Safely set the subject as the ID
+	            .setIssuedAt(new Date())
+	            .setExpiration(new Date(System.currentTimeMillis() + expiration))
+	            .signWith(SignatureAlgorithm.HS256, SECRET_KEY)  // Use your signing key here
+	            .compact();
+	    }
+
+
+	    private Key getSignInKey() {
+	        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+	        return Keys.hmacShaKeyFor(keyBytes);
+	    }
+
+	    public String extractUsername(String token) {
+	        return extractClaim(token, Claims::getSubject);
+	    }
+
+	    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+	        final Claims claims = extractAllClaims(token);
+	        return claimsResolver.apply(claims);
+	    }
+
+	    private Claims extractAllClaims(String token) {
+	        return Jwts.parserBuilder()
+	                .setSigningKey(getSignInKey())
+	                .build()
+	                .parseClaimsJws(token)
+	                .getBody();
+	    }
+
+	    private boolean isTokenExpired(String token) {
+	        return extractExpiration(token).before(new Date());
+	    }
+
+	    private Date extractExpiration(String token) {
+	        return extractClaim(token, Claims::getExpiration);
+	    }
+
+	    public boolean validateToken(String token) {
+	        try {
+	            // Attempt to extract claims or username
+	            extractUsername(token);  // This can throw JwtException
+
+	            // Additional token validation logic
+	            return true;
+	        } catch (JwtException | IllegalArgumentException e) {
+	            // Token is invalid, handle accordingly
+	            System.out.println("Invalid JWT token: " + e.getMessage());
+	            return false;
+	        }
+	    }
+
+
+
+
+		}
