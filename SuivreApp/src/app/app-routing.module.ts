@@ -10,6 +10,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './guards/admin.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'patient/:id', component: PatientComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'chatbot', component: ChatComponent },
 
   
   { path: '', redirectTo: '/login', pathMatch: 'full' },

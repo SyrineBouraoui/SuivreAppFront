@@ -1,3 +1,7 @@
+<!-- src/index.html -->
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
 <header>
   <div class="logo" routerLink="">
     <img class="logoo" src="https://e7.pngegg.com/pngimages/972/761/png-clipart-stethoscope-medicine-nursing-health-care-physician-health-blue-logo-thumbnail.png" width="7%">
@@ -6,12 +10,13 @@
       <ul>
         <li><a routerLink="">Accueil</a></li>
         <li><a routerLink="/" fragment="des" >À propos</a></li>
-        <li><a routerLink="/" fragment="help" >Besoin d'aide</a></li>
+        <li><a routerLink="/" fragment="chat" >Besoin d'aide</a></li>
         <li><a routerLink="/" fragment="contact" >Contactez-nous</a></li>
         <li><a routerLink="/signup">S'inscrire</a></li>
       </ul>
     </nav>
     <button class="get-started" routerLink="/login">Se Connecter</button>
+    
   </header>
   <div class="container">
   
@@ -23,6 +28,9 @@
         <div class="buttons">
           <button class="primary" routerLink="/signup">S'inscrire</button>
           <button class="secondary" routerLink="/" fragment="des" >En savoir plus</button>
+         
+          <button class="primaryy" (click)="openChatbot()">Besoin d’aide ?</button>
+
         </div>
       </div>
     </section>
@@ -114,22 +122,25 @@
 
 
 
-<div id="contact"class="cont">
+<div id="contact" class="cont">
   <img class="telephone" src="https://img.freepik.com/premium-vector/online-medical-consultation-telemedicine-doctor-distant-advise-health-insurance-healthcare-services_1170970-421.jpg?semt=ais_hybrid" alt="AI Solutuins"/>
 
   <div class="contact-container">
     <h2>Contactez-nous</h2>
-      <p>Get in touch</p>
-    <form [formGroup]="contactForm" (ngSubmit)="sendMessage()">
-      <input type="text" formControlName="name" placeholder="Votre Nom" required />
-      <input type="email" formControlName="email" placeholder="Votre Email" required />
-      <textarea formControlName="message" placeholder="Votre Message" required></textarea>
-      <button type="submit" [disabled]="contactForm.invalid">Envoyer</button>
-    </form>
-
-    <p *ngIf="messageSent" class="success">Message envoyé avec succès!</p>
+    <p>Get in touch.</p>
+    <div class="contact-container">
+      <input type="text" [(ngModel)]="contactName" placeholder="Votre nom" required />
+      <input type="email" [(ngModel)]="contactEmail" placeholder="Votre Email" required />
+      <textarea [(ngModel)]="contactMessage" placeholder="Votre Message" required></textarea>
+      <button (click)="sendContactMessage()" [disabled]="isLoading">
+        {{ isLoading ? 'Envoie...' : 'Envoyer' }}
+      </button>
+      <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </div>
   </div>
 </div>
+
 
 
   <footer class="partners">

@@ -25,7 +25,7 @@
           <th>#</th>
           <th>Email</th>
           <th>Role</th>
-          <th>Username</th>
+          <th>Nom</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -41,14 +41,14 @@
           </td>
         </tr>
         <tr *ngIf="!users || users.length === 0">
-          <td colspan="5">No users found.</td>
+          <td colspan="5">La liste des utilisateur est vide</td>
         </tr>
       </tbody>
     </table>
     
     <!-- Modal for adding/editing users -->
     <div *ngIf="showModal" class="modal">
-      <h3>{{ isEditing ? 'Edit User' : 'Add New User' }}</h3>
+      <h3>{{ isEditing ? 'Modifier l\'utilisateur' : 'Ajouter un utilisateur' }}</h3>
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form (ngSubmit)="submitForm()">
         <label>
@@ -56,13 +56,13 @@
           <input [(ngModel)]="selectedUser.email" name="email" required />
         </label>
         <label *ngIf="!isEditing">
-          Password:
+          Most de passe:
           <input [(ngModel)]="selectedUser.password" name="password" type="password" required />
         </label>
         <label>
           Role:
           <select [(ngModel)]="selectedUser.role" name="role" required>
-            <option value="" disabled>Select a role</option>
+            <option value="" disabled>Choisir un Role</option>
             <option value="PATIENT">Patient</option>
             <option value="DOCTOR">Doctor</option>
           </select>
@@ -70,19 +70,19 @@
         <label *ngIf="selectedUser.role === 'PATIENT'">
           Doctor:
           <select [(ngModel)]="selectedUser.doctorId" name="doctorId" required>
-            <option [ngValue]="null" disabled>Select a doctor</option>
+            <option [ngValue]="null" disabled>Choisir un docteur</option>
             <option *ngFor="let doctor of doctors" [ngValue]="doctor.id">
               {{ doctor.username }} (Doctor ID: {{ doctor.id }})
             </option>
           </select>
         </label>
         <label>
-          Username:
+          Nom:
           <input [(ngModel)]="selectedUser.username" name="username" required />
         </label>
         <div class="modal-actions">
-          <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
-          <button type="button" (click)="closeModal()">Cancel</button>
+          <button type="submit">{{ isEditing ? 'Modifier' : 'Ajouter' }}</button>
+          <button type="button" (click)="closeModal()">Annuler</button>
         </div>
       </form>
     </div>

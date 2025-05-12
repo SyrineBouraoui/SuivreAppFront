@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 
@@ -28,6 +29,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     AdminComponent,
     NotFoundComponent,
     ForgotPasswordComponent,
+    ChatComponent,
    
   ],
   imports: [

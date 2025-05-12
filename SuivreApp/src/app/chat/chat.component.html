@@ -1,0 +1,14 @@
+<!-- src/app/components/chat/chat.component.html -->
+<div class="chat-container">
+    <h3>Chat avec HeadicareBot</h3>
+    <div class="messages">
+      <div *ngFor="let msg of messages" [ngClass]="msg.sender === 'Vous' ? 'user-message' : 'bot-message'">
+        <strong>{{ msg.sender }} :</strong>
+        <span [innerHTML]="msg.message"></span>
+      </div>
+    </div>
+    <div class="input-area">
+      <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Tapez votre message..." />
+      <button (click)="sendMessage()">Envoyer</button>
+    </div>
+  </div>

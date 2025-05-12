@@ -85,7 +85,7 @@ nav ul li a {
   margin-top: 20px;
 }
 
-button.primary, button.secondary {
+button.primary, button.secondary, button.primaryy {
   font-size: 1.2rem;
   padding: 10px 20px;
   border: none;
@@ -99,6 +99,11 @@ button.primary {
   color: white;
   margin-right: 2%;
 }
+button.primaryy {
+  background-color: #007bff;
+  color: white;
+  margin-left: 2%;
+}
 
 button.secondary {
   background-color: #f8f9fa;
@@ -106,7 +111,7 @@ button.secondary {
   border: 2px solid #007bff;
 }
 
-button.primary:hover, button.secondary:hover {
+button.primary:hover, button.secondary:hover, button.primaryy:hover {
   opacity: 0.8;
 }
 
@@ -508,7 +513,6 @@ button.primary:hover, button.secondary:hover {
     height: auto;
   }
 }
-
 /* Mobile (max-width: 768px) */
 @media (max-width: 768px) {
   header {

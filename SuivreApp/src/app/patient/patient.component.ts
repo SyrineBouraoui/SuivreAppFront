@@ -16,6 +16,13 @@ interface SensorData {
   timestamp: string;
   patientId: string;
 }
+interface HeartRateData {
+  id: number;
+  heartRate: number;
+  spo2: number;
+  timestamp: string;
+  patientId: string;
+}
 
 @Component({
   selector: 'app-patient',
@@ -49,17 +56,19 @@ export class PatientComponent implements OnInit {
   @ViewChild('oxygenChart') oxygenChart!: ElementRef;
   @ViewChild('airTempChart') airTempChart!: ElementRef;
 
-  last7Days: string[] = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-  heartRateData: number[] = [75, 80, 72, 78, 85, 74, 76];
+  heartRateData: number[] = [];
   temperatureData: number[] = [];
-  oxygenData: number[] = [98, 97, 99, 96, 95, 98, 97];
+  oxygenData: number[] = [];
   airTempData: number[] = [];
   temperatureLabels: string[] = [];
   airTempLabels: string[] = [];
+  heartRateLabels: string[] = [];
+  oxygenLabels: string[] = [];
 
-  // New properties for user feedback
   isLoadingSensorData: boolean = false;
   sensorDataError: string | null = null;
+  isLoadingHeartRateData: boolean = false;
+  heartRateDataError: string | null = null;
 
   constructor(
     private messageService: MessageService,
@@ -90,17 +99,157 @@ export class PatientComponent implements OnInit {
       return;
     }
 
+    console.log('Patient ID:', this.patientId);
+
     this.loadMessages();
     this.updateHealthStatus();
     this.fetchSensorData();
-    setInterval(() => this.fetchSensorData(), 60000);
+    this.fetchHeartRateData();
+    setInterval(() => {
+      this.fetchSensorData();
+      this.fetchHeartRateData();
+    }, 60000);
   }
 
+
+
+
+
+
+  // Add these properties to your PatientComponent class
+showHistoricalDashboard: boolean = false; // Toggle for historical dashboard visibility
+historicalHeartRateData: { [key: string]: number[] } = {};
+historicalTemperatureData: { [key: string]: number[] } = {};
+historicalOxygenData: { [key: string]: number[] } = {};
+historicalAirTempData: { [key: string]: number[] } = {};
+historicalLabels: string[] = []; // To store the dates as labels
+
+// Add a method to toggle the historical dashboard
+toggleHistoricalDashboard(): void {
+  this.showHistoricalDashboard = !this.showHistoricalDashboard;
+  if (this.showHistoricalDashboard) {
+    this.fetchHistoricalData();
+  }
+}
+
+// Add a method to fetch historical data (last 7 days, for example)
+fetchHistoricalData(): void {
+  if (!this.patientId) {
+    console.error('No patient ID available to fetch historical data.');
+    return;
+  }
+
+  // Fetch sensor data (temperature, humidity)
+  this.http.get<SensorData[]>(`http://localhost:8080/api/sensor/data/${this.patientId}`).subscribe({
+    next: (data: SensorData[]) => {
+      this.processHistoricalSensorData(data);
+    },
+    error: (err) => {
+      console.error('Error fetching historical sensor data:', err);
+    }
+  });
+
+  // Fetch heart rate data (heart rate, spo2)
+  this.http.get<HeartRateData[]>(`http://localhost:8080/api/heartrate/data/${this.patientId}`).subscribe({
+    next: (data: HeartRateData[]) => {
+      this.processHistoricalHeartRateData(data);
+    },
+    error: (err) => {
+      console.error('Error fetching historical heart rate data:', err);
+    }
+  });
+}
+
+// Process sensor data (temperature, humidity) by day
+processHistoricalSensorData(data: SensorData[]): void {
+  const groupedByDay: { [key: string]: { temperature: number[], humidity: number[] } } = {};
+
+  data.forEach(entry => {
+    const date = new Date(entry.timestamp).toLocaleDateString(); // Group by day
+    if (!groupedByDay[date]) {
+      groupedByDay[date] = { temperature: [], humidity: [] };
+    }
+    groupedByDay[date].temperature.push(entry.temperature);
+    groupedByDay[date].humidity.push(entry.humidity);
+  });
+
+  this.historicalLabels = Object.keys(groupedByDay).slice(-7); // Last 7 days
+  this.historicalTemperatureData = {};
+  this.historicalAirTempData = {};
+
+  this.historicalLabels.forEach(date => {
+    const avgTemperature = groupedByDay[date].temperature.reduce((a, b) => a + b, 0) / groupedByDay[date].temperature.length;
+    const avgHumidity = groupedByDay[date].humidity.reduce((a, b) => a + b, 0) / groupedByDay[date].humidity.length;
+    this.historicalTemperatureData[date] = [avgTemperature];
+    this.historicalAirTempData[date] = [avgHumidity];
+  });
+
+  this.updateHistoricalCharts();
+}
+
+// Process heart rate data (heart rate, spo2) by day
+processHistoricalHeartRateData(data: HeartRateData[]): void {
+  const groupedByDay: { [key: string]: { heartRate: number[], spo2: number[] } } = {};
+
+  data.forEach(entry => {
+    const date = new Date(entry.timestamp).toLocaleDateString(); // Group by day
+    if (!groupedByDay[date]) {
+      groupedByDay[date] = { heartRate: [], spo2: [] };
+    }
+    groupedByDay[date].heartRate.push(entry.heartRate);
+    groupedByDay[date].spo2.push(entry.spo2);
+  });
+
+  this.historicalLabels = Object.keys(groupedByDay).slice(-7); // Last 7 days
+  this.historicalHeartRateData = {};
+  this.historicalOxygenData = {};
+
+  this.historicalLabels.forEach(date => {
+    const avgHeartRate = groupedByDay[date].heartRate.reduce((a, b) => a + b, 0) / groupedByDay[date].heartRate.length;
+    const avgSpo2 = groupedByDay[date].spo2.reduce((a, b) => a + b, 0) / groupedByDay[date].spo2.length;
+    this.historicalHeartRateData[date] = [avgHeartRate];
+    this.historicalOxygenData[date] = [avgSpo2];
+  });
+
+  this.updateHistoricalCharts();
+}
+
+// Update or create historical charts
+updateHistoricalCharts(): void {
+  if (this.showHistoricalDashboard) {
+    const historicalHeartRateCanvas = document.getElementById('historicalHeartRateChart') as HTMLCanvasElement;
+    const historicalTemperatureCanvas = document.getElementById('historicalTemperatureChart') as HTMLCanvasElement;
+    const historicalOxygenCanvas = document.getElementById('historicalOxygenChart') as HTMLCanvasElement;
+    const historicalAirTempCanvas = document.getElementById('historicalAirTempChart') as HTMLCanvasElement;
+
+    this.updateChart(historicalHeartRateCanvas, 'Historical Heart Rate (BPM)', this.historicalLabels.map(date => this.historicalHeartRateData[date][0]), 'purple', this.historicalLabels, 70, 150);
+    this.updateChart(historicalTemperatureCanvas, 'Historical Temperature (°C)', this.historicalLabels.map(date => this.historicalTemperatureData[date][0]), 'blue', this.historicalLabels, 15, 25);
+    this.updateChart(historicalOxygenCanvas, 'Historical Oxygen (%)', this.historicalLabels.map(date => this.historicalOxygenData[date][0]), 'yellow', this.historicalLabels, 60, 100);
+    this.updateChart(historicalAirTempCanvas, 'Historical Humidity (%)', this.historicalLabels.map(date => this.historicalAirTempData[date][0]), 'grey', this.historicalLabels, 60, 70);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   ngAfterViewInit() {
-    this.createChart(this.heartRateChart.nativeElement, 'Heart Rate (BPM)', this.heartRateData, 'purple');
-    this.createChart(this.temperatureChart.nativeElement, 'Temperature (°C)', this.temperatureData, 'blue', this.temperatureLabels);
-    this.createChart(this.oxygenChart.nativeElement, 'Oxygen (%)', this.oxygenData, 'yellow');
-    this.createChart(this.airTempChart.nativeElement, 'Humidity (%)', this.airTempData, 'grey', this.airTempLabels);
+    console.log('Initializing charts...');
+    this.createChart(this.heartRateChart.nativeElement, 'Heart Rate (BPM)', this.heartRateData, 'purple', this.heartRateLabels, 0, 120);
+    this.createChart(this.temperatureChart.nativeElement, 'Temperature (°C)', this.temperatureData, 'blue', this.temperatureLabels, 15, 25);
+    this.createChart(this.oxygenChart.nativeElement, 'Oxygen (%)', this.oxygenData, 'yellow', this.oxygenLabels, 60, 100);
+    this.createChart(this.airTempChart.nativeElement, 'Humidity (%)', this.airTempData, 'grey', this.airTempLabels, 60, 70);
   }
 
   fetchSensorData(): void {
@@ -113,9 +262,10 @@ export class PatientComponent implements OnInit {
     this.isLoadingSensorData = true;
     this.sensorDataError = null;
 
-    this.http.get<SensorData[]>(`http://192.168.1.8:8080/api/sensor/data/${this.patientId}`).subscribe({
+    this.http.get<SensorData[]>(`http://localhost:8080/api/sensor/data/${this.patientId}`).subscribe({
       next: (data: SensorData[]) => {
         this.isLoadingSensorData = false;
+        console.log('Sensor data received:', data);
         if (data && data.length > 0) {
           this.temperatureData = [];
           this.airTempData = [];
@@ -136,11 +286,15 @@ export class PatientComponent implements OnInit {
           this.temperature = latest.temperature;
           this.airTemperature = latest.humidity;
 
-          this.updateChart(this.temperatureChart.nativeElement, 'Temperature (°C)', this.temperatureData, 'blue', this.temperatureLabels);
-          this.updateChart(this.airTempChart.nativeElement, 'Humidity (%)', this.airTempData, 'grey', this.airTempLabels);
+          console.log('Temperature data:', this.temperatureData, 'Labels:', this.temperatureLabels);
+          console.log('Humidity data:', this.airTempData, 'Labels:', this.airTempLabels);
+
+          this.updateChart(this.temperatureChart.nativeElement, 'Temperature de l\'air (°C)', this.temperatureData, 'blue', this.temperatureLabels, 15, 25);
+          this.updateChart(this.airTempChart.nativeElement, 'Humidity (%)', this.airTempData, 'grey', this.airTempLabels, 60, 80)
           this.updateHealthStatus();
         } else {
           this.sensorDataError = 'No sensor data available for this patient.';
+          console.warn('No sensor data received.');
         }
       },
       error: (err) => {
@@ -151,7 +305,70 @@ export class PatientComponent implements OnInit {
     });
   }
 
-  createChart(canvas: HTMLCanvasElement, label: string, data: number[], color: string, labels: string[] = this.last7Days) {
+  fetchHeartRateData(): void {
+    if (!this.patientId) {
+      console.error('No patient ID available to fetch heart rate data.');
+      this.heartRateDataError = 'Cannot fetch heart rate data. Please log in again.';
+      return;
+    }
+
+    this.isLoadingHeartRateData = true;
+    this.heartRateDataError = null;
+
+    console.log('Fetching heart rate data for patientId:', this.patientId);
+
+    this.http.get<HeartRateData[]>(`http://localhost:8080/api/heartrate/data/${this.patientId}`).subscribe({
+      next: (data: HeartRateData[]) => {
+        this.isLoadingHeartRateData = false;
+        console.log('Heart rate data received:', data);
+        if (data && data.length > 0) {
+          this.heartRateData = [];
+          this.oxygenData = [];
+          this.heartRateLabels = [];
+          this.oxygenLabels = [];
+
+          const recentData = data.slice(-7);
+
+          recentData.forEach((entry) => {
+            const heartRate = entry.heartRate ?? 0;
+            const spo2 = entry.spo2 ?? 0;
+            const timestamp = new Date(entry.timestamp).toLocaleTimeString();
+            if (heartRate > 0) {
+              this.heartRateData.push(heartRate);
+              this.heartRateLabels.push(timestamp);
+            }
+            if (spo2 > 0) {
+              this.oxygenData.push(spo2);
+              this.oxygenLabels.push(timestamp);
+            }
+          });
+
+          const latest = data[data.length - 1];
+          this.heartRate = latest.heartRate ?? this.heartRate;
+          this.oxygen = latest.spo2 ?? this.oxygen;
+
+          console.log('Heart rate data:', this.heartRateData, 'Labels:', this.heartRateLabels);
+          console.log('Oxygen data:', this.oxygenData, 'Labels:', this.oxygenLabels);
+          console.log('Latest heart rate:', this.heartRate, 'Latest oxygen:', this.oxygen);
+
+          this.updateChart(this.heartRateChart.nativeElement, 'Heart Rate (BPM)', this.heartRateData, 'purple', this.heartRateLabels, 70, 150);
+          this.updateChart(this.oxygenChart.nativeElement, 'Oxygen (%)', this.oxygenData, 'yellow', this.oxygenLabels, 60, 100);
+          this.updateHealthStatus();
+        } else {
+          this.heartRateDataError = 'No heart rate data available for this patient.';
+          console.warn('No heart rate data received.');
+        }
+      },
+      error: (err) => {
+        this.isLoadingHeartRateData = false;
+        console.error('Error fetching heart rate data:', err);
+        this.heartRateDataError = 'Failed to load heart rate data. Please try again later.';
+      }
+    });
+  }
+
+  createChart(canvas: HTMLCanvasElement, label: string, data: number[], color: string, labels: string[] = [], minY: number = 0, maxY: number = 100) {
+    console.log(`Creating chart for ${label} with data:`, data, 'and labels:', labels);
     new Chart(canvas, {
       type: 'line',
       data: {
@@ -161,26 +378,41 @@ export class PatientComponent implements OnInit {
           data: data,
           borderColor: color,
           borderWidth: 2,
-          fill: false
+          fill: false,
+          pointRadius: 3,
+          pointBackgroundColor: color
         }]
       },
       options: {
         responsive: true,
         plugins: { legend: { display: true } },
-        scales: { x: { display: true }, y: { display: true } }
+        scales: {
+          x: { display: true },
+          y: {
+            display: true,
+            beginAtZero: false,
+            min: minY,
+            max: maxY
+          }
+        }
       }
     });
   }
 
-  updateChart(canvas: HTMLCanvasElement, label: string, data: number[], color: string, labels: string[]) {
+  updateChart(canvas: HTMLCanvasElement, label: string, data: number[], color: string, labels: string[], minY: number = 0, maxY: number = 100) {
+    console.log(`Updating chart for ${label} with data:`, data, 'and labels:', labels);
     const chart = Chart.getChart(canvas);
     if (chart) {
       chart.data.labels = labels;
       chart.data.datasets[0].data = data;
       chart.data.datasets[0].label = label;
+      chart.data.datasets[0].borderColor = color;
+      chart.options.scales!['y']!.min = minY;
+      chart.options.scales!['y']!.max = maxY;
       chart.update();
     } else {
-      this.createChart(canvas, label, data, color, labels);
+      console.warn(`Chart not found for ${label}, creating new chart.`);
+      this.createChart(canvas, label, data, color, labels, minY, maxY);
     }
   }
 
@@ -257,11 +489,11 @@ export class PatientComponent implements OnInit {
     let alerts = 0;
     if (this.heartRate < 60 || this.heartRate > 100) {
       alerts++;
-      this.addNotification('Fréquence cardiaque élevée détectée !');
+      this.addNotification('Fréquence cardiaque anormale détectée !');
     }
-    if (this.temperature < 36 || this.temperature > 38) {
+    if (this.temperature < 20 || this.temperature > 23) {
       alerts++;
-      this.addNotification('Température corporelle élevée détectée !');
+      this.addNotification('Température anormale détectée !');
     }
     if (this.oxygen < 90) {
       alerts++;
@@ -271,11 +503,11 @@ export class PatientComponent implements OnInit {
       alerts++;
       this.addNotification('Humidité extrême détectée !');
     }
+    this.healthStatus = alerts > 0 ? (alerts > 1 ? 'Critique' : 'Alerte') : 'Normale';
     if (alerts > 0) {
       this.sendAlert();
-    } else {
-      this.healthStatus = 'Normale';
     }
+    console.log('Health status updated:', this.healthStatus);
   }
 
   addNotification(message: string) {
@@ -283,6 +515,7 @@ export class PatientComponent implements OnInit {
       this.notifications.shift();
     }
     this.notifications.push(message);
+    console.log('Notification added:', message);
   }
 
   sendAlert() {
@@ -295,6 +528,7 @@ export class PatientComponent implements OnInit {
       doctorPhone: doctorPhone,
       patientName: this.patientName
     };
+    console.log('Sending alert with data:', alertData);
     this.http.post('http://localhost:8080/api/alerts/send-sms', alertData, { responseType: 'text' }).subscribe(
       (response: string) => {
         console.log('Alert response:', response);
@@ -317,8 +551,8 @@ export class PatientComponent implements OnInit {
                value < 70 || value > 90 ? 'warning' :
                'healthy';
       case 'temperature':
-        return value < 36 || value > 38 ? 'danger' :
-               value < 36.5 || value > 37.5 ? 'warning' :
+        return value < 15 || value > 27 ? 'danger' :
+               value < 19.5 || value > 24.5 ? 'warning' :
                'healthy';
       case 'oxygen':
         return value < 90 ? 'danger' :
@@ -335,6 +569,7 @@ export class PatientComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   goToHome() {

@@ -37,7 +37,7 @@
           <p>{{ heartRate }} BPM</p>
         </div>
         <div class="card" [ngClass]="getCardClass('temperature', temperature)">
-          <h3>Température</h3>
+          <h3>Température de l'air</h3>
           <p>{{ temperature }} °C</p>
         </div>
         <div class="card" [ngClass]="getCardClass('oxygen', oxygen)">
@@ -66,7 +66,7 @@
       <canvas #heartRateChart></canvas>
     </div>
     <div class="chart">
-      <h3>Température</h3>
+      <h3>Température de l'air</h3>
       <canvas #temperatureChart></canvas>
     </div>
     <div class="chart">
@@ -78,6 +78,35 @@
       <canvas #airTempChart></canvas>
     </div>
   </div>
+  <!-- Add a button to toggle the historical dashboard -->
+<div class="dashboard-btn">
+  <button class="toggle-historical-btn" (click)="toggleHistoricalDashboard()">
+    {{ showHistoricalDashboard ? 'Hide Historical Dashboard' : 'Historique des données (Jours)' }}
+  </button>
+</div>
+
+<!-- Historical Dashboard Section -->
+<section *ngIf="showHistoricalDashboard" class="historical-dashboard">
+  <h2>Historique des données (Jours)</h2>
+  <div class="charts-container">
+    <div class="chart">
+      <h3>Historique de Fréquence Cardiaque</h3>
+      <canvas id="historicalHeartRateChart"></canvas>
+    </div>
+    <div class="chart">
+      <h3>Historique de Température de l'air</h3>
+      <canvas id="historicalTemperatureChart"></canvas>
+    </div>
+    <div class="chart">
+      <h3>Historique de Taux d'Oxygéne</h3>
+      <canvas id="historicalOxygenChart"></canvas>
+    </div>
+    <div class="chart">
+      <h3>Historique d'Humidité</h3>
+      <canvas id="historicalAirTempChart"></canvas>
+    </div>
+  </div>
+</section>
 
   <section id="hello" class="hello">
     <div class="message-box">

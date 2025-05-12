@@ -433,6 +433,48 @@ textarea {
   margin: 5px 0;
   border-radius: 6px;
 }
+
+
+
+
+
+
+
+
+.toggle-historical-btn {
+  margin-top: 20px ;
+  margin-left: 20px;
+  padding: 10px 20px;
+  background: #1565c0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toggle-historical-btn:hover {
+  background-color: #0056b3;
+}
+
+.historical-dashboard {
+  padding: 20px;
+  background-color: #5eb4a911;
+  border-radius: 8px;
+}
+
+.historical-dashboard h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-btn{
+  background-color: #5eb4a911;
+
+}
+
+
+
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .container, .charts-container {
