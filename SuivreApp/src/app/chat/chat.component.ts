@@ -23,8 +23,16 @@ export class ChatComponent implements OnInit {
 
   sendMessage(): void {
     if (this.newMessage.trim()) {
-      this.messages.push({ sender: 'Vous', message: this.newMessage });
-      this.chatbotService.askChatbot(this.newMessage).subscribe({
+      // Store the original message for display
+      const displayMessage = this.newMessage.trim();
+      // Normalize the message to lowercase for processing
+      const normalizedMessage = this.newMessage.trim().toLowerCase();
+
+      // Add the original message to the UI
+      this.messages.push({ sender: 'Vous', message: displayMessage });
+
+      // Send the normalized message to the chatbot service
+      this.chatbotService.askChatbot(normalizedMessage).subscribe({
         next: (response) => {
           this.messages.push({ sender: 'HeadicareBot', message: response });
           if (response.includes('Souhaitez-vous contacter un agent de support ?')) {
@@ -43,6 +51,6 @@ export class ChatComponent implements OnInit {
   }
 
   connectToSupport(): void {
-    this.router.navigate(['/chat']); // Redirige vers une future route pour le chat humain
+    this.router.navigate(['/chat']);
   }
 }

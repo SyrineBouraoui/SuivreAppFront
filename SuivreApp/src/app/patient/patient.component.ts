@@ -80,38 +80,62 @@ export class PatientComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.userId = params.get('id');
-      if (this.userId) {
-        this.getConnectedUserDetails(this.userId);
-      } else {
-        console.error('No user ID found in route.');
-        this.errorMessage = 'Unable to load user details. Please try logging in again.';
-      }
-    });
+  // Extract patientId from route
+  this.patientId = this.route.snapshot.paramMap.get('id');
+  console.log('Patient ID (from route):', this.patientId);
 
+  if (this.patientId) {
+    this.fetchPatientData(this.patientId);
+  } else {
+    console.error('No patientId found in route');
+    // Fallback to localStorage only if route param is missing
     this.patientId = localStorage.getItem('patientId') || '';
-    this.doctorId = sessionStorage.getItem('doctorId');
-
-    if (!this.patientId || !this.doctorId) {
-      console.error('Patient ID or Doctor ID not found!');
-      this.errorMessage = 'Authentication error. Please log in again.';
+    if (!this.patientId) {
+      this.errorMessage = 'No patient ID found. Please log in again.';
       return;
     }
-
-    console.log('Patient ID:', this.patientId);
-
-    this.loadMessages();
-    this.updateHealthStatus();
-    this.fetchSensorData();
-    this.fetchHeartRateData();
-    setInterval(() => {
-      this.fetchSensorData();
-      this.fetchHeartRateData();
-    }, 60000);
   }
 
+  // Keep doctorId from sessionStorage
+  this.doctorId = sessionStorage.getItem('doctorId');
+  if (!this.doctorId) {
+    console.error('Doctor ID not found!');
+    this.errorMessage = 'Authentication error. Please log in again.';
+    return;
+  }
 
+  // Update localStorage to match route patientId
+  if (this.patientId) {
+    localStorage.setItem('patientId', this.patientId);
+  }
+
+  console.log('Patient ID (final):', this.patientId);
+
+  this.route.paramMap.subscribe(params => {
+    this.userId = params.get('id');
+    if (this.userId) {
+      this.getConnectedUserDetails(this.userId);
+    } else {
+      console.error('No user ID found in route.');
+      this.errorMessage = 'Unable to load user details. Please try logging in again.';
+    }
+  });
+
+  this.loadMessages();
+  this.updateHealthStatus();
+  this.fetchSensorData();
+  this.fetchHeartRateData();
+  setInterval(() => {
+    this.fetchSensorData();
+    this.fetchHeartRateData();
+  }, 60000);
+}
+fetchPatientData(patientId: string) {
+    // Replace with your actual data fetching logic
+    console.log('Fetching heart rate data for patientId:', patientId);
+    // Example: Call a service to fetch data
+    // this.patientService.getHealthData(patientId).subscribe(...);
+  }
 
 
 
@@ -519,7 +543,7 @@ updateHistoricalCharts(): void {
   }
 
   sendAlert() {
-    const doctorPhone = '+21697404410';
+    const doctorPhone = '+21653336990';
     const alertData = {
       heartRate: this.heartRate,
       temperature: this.temperature,

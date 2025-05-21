@@ -216,8 +216,7 @@ impersonatePatient(patientId: string, patientName:string) {
         // Store the impersonated patient's token in sessionStorage
         sessionStorage.setItem('patientToken', response.token);
   
-        // Get the patient's name from the response
-        alert(`You are now impersonating patient: ${response.patientName}`);
+       
   
         // Redirect to the patient's dashboard or any desired page
         sessionStorage.setItem('patientName', response.patientName);
